@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личная библиотека</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <h1>Личная библиотека</h1>
+    <div id="books"></div>
+
+    <h2>Добавить книгу</h2>
+    <form id="bookForm">
+        <input type="text" id="title" placeholder="Название книги" required><br>
+        <input type="text" id="author" placeholder="Автор" required><br>
+        <textarea id="description" placeholder="Описание"></textarea><br>
+        <input type="file" id="cover" name="cover" accept="image/*"><br>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <script src="index.js"></script>
+</body>
+</html>

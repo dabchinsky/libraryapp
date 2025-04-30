@@ -1,0 +1,4 @@
+/.env
+/eslint.config.js
+/node_modules
+/test
