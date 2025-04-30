@@ -2,3 +2,4 @@
 /eslint.config.js
 /node_modules
 /test
+/requests.rest
