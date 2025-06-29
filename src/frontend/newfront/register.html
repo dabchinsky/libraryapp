@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header class="header-bar">
+        <nav class="navigation">
+            <img src="logo.svg" alt="logo" class="nav-logo">
+            <div class="navigation-block">
+                <ul class="navigation-list">
+                    <li class="navigation-home nav-border"><a class="home-link" href="index.html">Home</a></li>
+                    <li class="navigation-contacts nav-border">Contact Us</li>
+                    <li class="navigation-login auth-border"><a class="auth-link" href="login.html">Login</a></li>
+                    <li class="navigation-register auth-border"><a class="auth-link" href="register.html">Get Started</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="register-section">
+        <h1>Sign up for library</h1>
+        <div class="register-block">
+            <form action="" class="register-form">
+                <label for="email">Email</label>
+                <input type="text" name="email" placeholder="Email" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Password" required>
+                <label for="password-repeat">Repeat password</label>
+                <input type="password" name="password-repeat" placeholder="Repeat password" required>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

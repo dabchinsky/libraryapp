@@ -8,7 +8,7 @@ async function getBooks(req, res) {
     const books = result.rows.map((book) => {
         return {
             ...book,
-            cover_url: book.file_path ? `../covers/${book.file_path}` : null,
+            cover_url: book.file_path ? `../../covers/${book.file_path}` : null,
         };
     });
     res.json({ books });
@@ -22,7 +22,7 @@ async function getBook(req, res) {
     const book = result.rows[0];
     res.json({
         ...book,
-        cover_url: book.file_path ? `../covers/${book.file_path}` : null,
+        cover_url: book.file_path ? `../../covers/${book.file_path}` : null,
     });
 }
 
