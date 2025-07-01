@@ -1,17 +1,31 @@
 import pool from "../../db.js";
 import queries from "./books-queries.js";
+import Model from "../../seq.js"
 
 async function getBooks(req, res) {
-    const result = await getBooksQuery();
-    if (result === "error") return res.status(500).send("Database error");
-    if (result === undefined) return res.status(500).send("undefined");
-    const books = result.rows.map((book) => {
-        return {
-            ...book,
-            cover_url: book.file_path ? `../../covers/${book.file_path}` : null,
-        };
+    const resultSeq = await Model.Book.findAll();
+    const books = resultSeq.map(book => book.toJSON())
+    console.log(books)
+    const resultSeqWithCovers = await Model.Book.findAll({
+        include:[{
+            model: Model.BookCover,
+            as: 'covers',
+            attributes: ['file_path'],
+        }]
     });
-    res.json({ books });
+    let booksWithCovers = resultSeqWithCovers.map(book => book.toJSON());
+    booksWithCovers = booksWithCovers.map(book => {
+        return {
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            description: book.description,
+            published_year: book.published_year,
+            cover_url: book.covers.length > 0 ? `../../covers/${book.covers[0].file_path}` : null,
+        }
+    }) 
+    console.log(booksWithCovers)
+    res.json({ books: booksWithCovers });
 }
 
 async function getBook(req, res) {
