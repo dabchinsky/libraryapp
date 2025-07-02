@@ -1,7 +1,29 @@
 const collection = document.querySelector('.collection')
 const addCard = document.querySelector('.add-card')
-const overlay = document.getElementById('overlay')
+const overlay = document.getElementById('card-overlay')
 overlay.addEventListener('click', handleOverlayClick)
+const addOverlay = document.getElementById('add-overlay');
+addOverlay.addEventListener('click', handleAddOverlayClick)
+const bookForm = document.getElementById('bookForm')
+bookForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", document.getElementById("add-title").value);
+    formData.append("author", document.getElementById("add-author").value);
+    formData.append("description", document.getElementById("add-description").value);
+    formData.append("cover", document.getElementById("add-cover").files[0]);
+    console.log(formData)
+
+    const response = await fetch("http://localhost:3000/api/v1/books/upload", {
+        method: "POST",
+        body: formData,
+    });
+
+    const result = await response.json();
+    alert(result.message);
+})
+
 var draggedElement = null
 
 function handleDragStart(e) {
@@ -102,6 +124,15 @@ function handleOverlayClick(e) {
     }
 }
 
+function handleAddOverlayClick(e) {
+    if (e.target === this) {
+        console.log('add overlay click')
+        const addContainer = addOverlay.firstElementChild
+        addOverlay.classList.remove('active')
+        addContainer.classList.remove('active')
+    }
+}
+
 async function loadBooks() {
     try {
         const response = await fetch('http://localhost:3000/api/v1/books/')
@@ -131,17 +162,22 @@ async function loadBooks() {
 loadBooks()
 
 addCard.addEventListener('click', () => {
-    const newCard = document.createElement('div')
-    newCard.classList.add('card')
-    newCard.style.backgroundColor = randomColor()
-    newCard.draggable = true
-    newCard.addEventListener('dragstart', handleDragStart)
-    newCard.addEventListener('dragenter', handleDragEnter)
-    newCard.addEventListener('dragover', handleDragOver)
-    newCard.addEventListener('dragleave', handleDragLeave)
-    newCard.addEventListener('dragend', handleDragEnd)
-    newCard.addEventListener('drop', handleDrop)
-    collection.insertBefore(newCard, addCard)
+    console.log('add card click')
+    const addContainer = document.getElementById('add-container')
+    addOverlay.classList.add('active')
+    addContainer.classList.add('active')
+    // loadBook(this)
+    // const newCard = document.createElement('div')
+    // newCard.classList.add('card')
+    // newCard.style.backgroundColor = randomColor()
+    // newCard.draggable = true
+    // newCard.addEventListener('dragstart', handleDragStart)
+    // newCard.addEventListener('dragenter', handleDragEnter)
+    // newCard.addEventListener('dragover', handleDragOver)
+    // newCard.addEventListener('dragleave', handleDragLeave)
+    // newCard.addEventListener('dragend', handleDragEnd)
+    // newCard.addEventListener('drop', handleDrop)
+    // collection.insertBefore(newCard, addCard)
 })
 
 function randomColor() {

@@ -7,20 +7,31 @@
     <link rel="stylesheet" href="library.css">
 </head>
 <body>
-    <!-- <button class="button reset">reset</button> -->
-    <!-- <button class="button boxes">boxes</button> -->
     <section class="main">
         <div class="collection">
             <div class="card add-card">Add</div>
         </div>
     </section>
 
-    <div class="overlay hidden" id="overlay">
-        <div class="overlay-book hidden" id="overlay-book">
+    <div class="overlay" id="card-overlay">
+        <div class="overlay-book" id="overlay-book">
             <h1 id="title">Загрузка...</h1>
             <p id="author">Author</p>
             <p id="description">Description</p>
             <img src="" alt="обложка" id="cover" />
+        </div>
+    </div>
+
+    <div class="overlay" id="add-overlay">
+        <div class="overlay-book" id="add-container">
+            <h2>Добавить книгу</h2>
+            <form id="bookForm">
+                <input type="text" id="add-title" placeholder="Название книги" required><br>
+                <input type="text" id="add-author" placeholder="Автор" required><br>
+                <textarea id="add-description" placeholder="Описание"></textarea><br>
+                <input type="file" id="add-cover" name="cover" accept="image/*"><br>
+                <button type="submit">Добавить</button>
+            </form>
         </div>
     </div>
 <script type="module" src="library.js"></script>
