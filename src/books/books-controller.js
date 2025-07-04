@@ -1,23 +1,18 @@
-import pool from "../../db.js";
 import Model from "./books-dao.js"
 
 async function getBooks(req, res) {
     const resultSeqWithCovers = await Model.Book.findAll({
-        include:[{
+        include:{
             model: Model.BookCover,
             as: 'covers',
             attributes: ['file_path'],
-        }]
+        }
     });
     const booksWithCovers = resultSeqWithCovers.map(book => {
-        const bookJson = book.toJSON()
+        const { covers, ...bookDetails} = book.toJSON()
         return {
-            id: bookJson.id,
-            title: bookJson.title,
-            author: bookJson.author,
-            description: bookJson.description,
-            published_year: bookJson.published_year,
-            cover_url: bookJson.covers.length > 0 ? `../../covers/${book.covers[0].file_path}` : null,
+            ...bookDetails,
+            cover_url: covers.length > 0 ? `../covers/${covers[0].file_path}` : null,
         }
     });
     res.json({ books: booksWithCovers });
@@ -26,20 +21,16 @@ async function getBooks(req, res) {
 async function getBook(req, res) {
     const id = req.params.id;
     const resultSeq = await Model.Book.findByPk(id, {
-        include: [{
+        include: {
             model: Model.BookCover,
             as: 'covers',
             attributes: ['file_path']
-        }]
+        }
     });
-    const resultSeqJson = resultSeq.toJSON()
+    const { covers, ...bookDetails } = resultSeq.toJSON()
     const bookWithCover = {
-            id: resultSeqJson.id,
-            title: resultSeqJson.title,
-            author: resultSeqJson.author,
-            description: resultSeqJson.description,
-            published_year: resultSeqJson.published_year,
-            cover_url: resultSeqJson.covers.length > 0 ? `../../covers/${resultSeqJson.covers[0].file_path}` : null,
+            ...bookDetails,
+            cover_url: covers.length > 0 ? `../covers/${covers[0].file_path}` : null,
         }
     res.json({ ...bookWithCover })
 }

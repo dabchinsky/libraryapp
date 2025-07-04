@@ -64,16 +64,21 @@ BookCover.init({
 );
 
 Book.hasMany(BookCover, {
-  foreignKey: 'book_id', 
-  sourceKey: 'id',      
+  foreignKey: 'book_id',
   as: 'covers',          
   onDelete: 'CASCADE', 
 });
 
 BookCover.belongsTo(Book, {
   foreignKey: 'book_id',
-  targetKey: 'id',      
   as: 'book',           
 });
+
+async function seqSync() {
+  await sequelize.sync({ alter: true });
+  console.log('synched')
+}
+
+// seqSync();
 
 export default { Book, BookCover }

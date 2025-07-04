@@ -112,7 +112,7 @@ async function loadBook(bookElement) {
     bookDescription.innerHTML = `${book.description}`;
     const bookCover = document.getElementById("cover");
     console.log(book.cover_url)
-    bookCover.src = `${book.cover_url ? book.cover_url : '../../covers/no_cover.png'}`;
+    bookCover.src = `${book.cover_url ? book.cover_url : '../covers/no_cover.png'}`;
 }
 
 function handleOverlayClick(e) {
