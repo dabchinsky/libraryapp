@@ -25,6 +25,10 @@ Book.init({
   published_year: {
     type: Sequelize.DataTypes.INTEGER, 
     allowNull: true 
+  },
+  position_number: {
+    type: Sequelize.DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   sequelize, 

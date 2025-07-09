@@ -50,7 +50,7 @@ const uploadBook = async (req, res) => {
             file_path: file_path,
         })
     }
-    res.json({ message: "Книга и обложка добавлены"});
+    res.json({ message: "Книга и обложка добавлены", book: book.toJSON() });
 };
 
 
