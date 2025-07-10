@@ -12,6 +12,6 @@ export default defineConfig({
     }
   },
   server: {
-    open: '/library.html' // Открывать test.html при запуске сервера
+    open: '/src/frontend/library.html' // Открывать test.html при запуске сервера
   }
 });

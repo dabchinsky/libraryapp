@@ -15,7 +15,7 @@ loadBooks();
 var sortable = Sortable.create(collection, {
     group: "sorting",
     sort: true,
-    animation: 100,
+    animation: 150,
     ghostClass: "card-ghost",
     swapThreshold: 0.3,
     filter: '.no-sort',
@@ -24,10 +24,22 @@ var sortable = Sortable.create(collection, {
             return false;
         }
     },
-    onEnd: function(evt) {
-        document.querySelectorAll('.card:not(.add-card)').forEach(card => console.log(card.dataset.id))
-    }
+    onEnd: reorderBooks,
 })
+
+async function reorderBooks(evt) {
+    const ids = [...document.querySelectorAll('.card:not(.add-card)')].map(card => card.dataset.id)
+        const response = await fetch('http://localhost:3000/api/v1/books/reorder', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ newOrder: ids })
+        });
+
+        const result = await response.json()
+        console.log(result.message)
+}
 
 bookForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -47,6 +59,7 @@ bookForm.addEventListener('submit', async (event) => {
     const result = await response.json();
     if (result?.book?.id) {
         await loadBook(result.book.id)
+        await reorderBooks();
     }
     console.log(result.book.id)
     alert(result.message);
@@ -139,7 +152,8 @@ async function loadBooks() {
     try {
         const response = await fetch('http://localhost:3000/api/v1/books/')
         const books = await response.json()
-        books.books.forEach(book => {
+        const sortedBooksArray = books.books.sort((a, b) => a.position_number - b.position_number)
+        sortedBooksArray.forEach(book => {
             const newCard = createNewCard(book)
             collection.insertBefore(newCard, addCard)
         })

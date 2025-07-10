@@ -53,6 +53,23 @@ const uploadBook = async (req, res) => {
     res.json({ message: "Книга и обложка добавлены", book: book.toJSON() });
 };
 
+async function reorderBooks(req, res) {
+    const ids = req.body.newOrder;
+    console.log(ids)
+
+    await ids.forEach((id, index) => {
+        Model.Book.update(
+            { position_number: index},
+            {
+                where: {
+                    id: id
+                }
+            }
+        );
+    });
+
+    res.json({ message: "позиции обновлены" })
+}
 
 
-export default { getBooks, uploadBook, getBook };
+export default { getBooks, uploadBook, getBook, reorderBooks };

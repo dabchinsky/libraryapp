@@ -9,4 +9,6 @@ router.get("/:id", controller.getBook);
 
 router.post("/upload", upload.fields([{ name: "cover", maxCount: 1 }]), controller.uploadBook);
 
+router.patch("/reorder", controller.reorderBooks)
+
 export default router;
