@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", controller.getBooks);
 router.get("/:id", controller.getBook);
+router.get('/cover/:id', controller.getCover);
 
 router.post("/upload", upload.fields([{ name: "cover", maxCount: 1 }]), controller.uploadBook);
 

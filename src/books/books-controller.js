@@ -1,4 +1,41 @@
+import path from "path";
+
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 import Model from "./books-dao.js"
+
+const imagesDir = '/Users/mac/Documents/libraryapp/src/covers/'
+
+async function getCover(req, res) {
+    const bookId = req.params.id
+    const book = await Model.Book.findOne({ where: { id: bookId } })
+    const cover = await book.getCovers();
+    
+    let imagePath;
+    let ext;
+    if (cover.length > 0) {
+        imagePath = path.join(imagesDir, cover[0].file_path)
+        ext = path.extname(cover[0].file_path).toLowerCase();
+    } else {
+        imagePath = path.join(imagesDir, 'no_cover.png')
+        ext = '.png'
+    }
+    const ContentType = `image/${ext.slice(1)}`
+    console.log(imagePath)
+    console.log(ext)
+    console.log(ContentType)
+    res.setHeader('Content-Type', ContentType)
+    res.sendFile(imagePath, (error) => {
+        if (error) {
+            console.error('Error sending file:', error);
+            res.status(500).send('Error sending image.');
+        }
+    })
+}
 
 async function getBooks(req, res) {
     const resultSeqWithCovers = await Model.Book.findAll({
@@ -72,4 +109,4 @@ async function reorderBooks(req, res) {
 }
 
 
-export default { getBooks, uploadBook, getBook, reorderBooks };
+export default { getBooks, uploadBook, getBook, reorderBooks, getCover };

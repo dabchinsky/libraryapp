@@ -1,4 +1,8 @@
-GET http://localhost:3000/api/v1/books/1
+### Get books
+GET http://localhost:3000/api/v1/books/
 
-###
+### Get book cover
+GET http://localhost:3000/api/v1/books/cover/1
+
+### Post book
 POST http://localhost:3000/api/v1/books/upload

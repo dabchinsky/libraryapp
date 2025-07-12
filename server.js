@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 
 import booksRouter from "./src/books/books-routes.js";
-import sequelize from './seq.js'
 
 console.log("SECRET: ", process.env.DB_USER);
 

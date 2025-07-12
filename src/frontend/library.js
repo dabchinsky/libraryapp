@@ -95,7 +95,7 @@ async function loadBookOverlay(bookElement) {
     bookDescription.innerHTML = `${book.description}`;
     const bookCover = document.getElementById("cover");
     console.log(book.cover_url)
-    bookCover.src = `${book.cover_url ? book.cover_url : '../covers/no_cover.png'}`;
+    bookCover.src = `http://localhost:3000/api/v1/books/cover/${id}`;
 }
 
 function handleOverlayClick(e) {
@@ -117,11 +117,12 @@ function handleAddOverlayClick(e) {
 }
 
 function createNewCard(book) {
+    const coverUrl = `http://localhost:3000/api/v1/books/cover/${book.id}`
     const newCard = document.createElement('div')
     newCard.classList.add('card')
     newCard.dataset.id = book.id;
     newCard.innerHTML = `
-        ${book.cover_url ? `<img src="${book.cover_url}" alt="Обложка">` : book.title}
+        ${book.cover_url ? `<img src="${coverUrl}" alt="Обложка">` : book.title}
     `;
 
     // OLD DND REALISATION
