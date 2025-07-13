@@ -1,8 +1,9 @@
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 
-const collection = document.querySelector('.collection')
-const addCard = document.querySelector('.add-card')
+const collection = document.getElementById('js-collection')
+const addCard = document.querySelector('.js-add-card')
 const overlay = document.getElementById('card-overlay')
+const overlayBook = document.getElementById('overlay-book')
 const addOverlay = document.getElementById('add-overlay');
 const bookForm = document.getElementById('bookForm')
 var draggedElement = null
@@ -15,10 +16,10 @@ loadBooks();
 var sortable = Sortable.create(collection, {
     group: "sorting",
     sort: true,
-    animation: 150,
+    animation: 100,
     ghostClass: "card-ghost",
     swapThreshold: 0.3,
-    filter: '.no-sort',
+    filter: '.js-no-sort',
     onMove: function (evt) {
         if (evt.related.classList.contains('no-sort')) {
             return false;
@@ -28,7 +29,7 @@ var sortable = Sortable.create(collection, {
 })
 
 async function reorderBooks(evt) {
-    const ids = [...document.querySelectorAll('.card:not(.add-card)')].map(card => card.dataset.id)
+    const ids = [...document.querySelectorAll('.js-card:not(.add-card)')].map(card => card.dataset.id)
         const response = await fetch('http://localhost:3000/api/v1/books/reorder', {
             method: 'PATCH',
             headers: {
@@ -74,9 +75,10 @@ addCard.addEventListener('click', () => {
 
 function handleBookClick(e) {
     console.log('book click')
-    const overlayBook = document.getElementById('overlay-book')
-    overlay.classList.add('active')
-    overlayBook.classList.add('active')
+    overlay.classList.remove('invisible')
+    overlay.classList.remove('opacity-0')
+    overlayBook.classList.remove('invisible')
+    overlayBook.classList.remove('opacity-0')
     loadBookOverlay(this)
 }
 
@@ -101,9 +103,10 @@ async function loadBookOverlay(bookElement) {
 function handleOverlayClick(e) {
     if (e.target === this) {
         console.log('overlay click')
-        const overlayBook = overlay.firstElementChild
-        overlay.classList.remove('active')
-        overlayBook.classList.remove('active')
+        overlay.classList.add('invisible')
+        overlay.classList.add('opacity-0')
+        overlayBook.classList.add('invisible')
+        overlayBook.classList.add('opacity-0')
     }
 }
 
@@ -119,10 +122,11 @@ function handleAddOverlayClick(e) {
 function createNewCard(book) {
     const coverUrl = `http://localhost:3000/api/v1/books/cover/${book.id}`
     const newCard = document.createElement('div')
-    newCard.classList.add('card')
+    // newCard.classList.add('card')
+    newCard.className = 'js-card flex justify-center items-center border-1 border-black rounded-lg w-27 h-40 overflow-hidden cursor-pointer select-none hover:scale-103'
     newCard.dataset.id = book.id;
     newCard.innerHTML = `
-        ${book.cover_url ? `<img src="${coverUrl}" alt="Обложка">` : book.title}
+        ${book.cover_url ? `<img src="${coverUrl}" class="w-full h-full" alt="Обложка">` : `<p class="w-full text-center">${book.title}</p>`}
     `;
 
     // OLD DND REALISATION

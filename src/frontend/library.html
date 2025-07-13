@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="library.css">
+    <!-- <link rel="stylesheet" href="library.css"> -->
+    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="custom.css">
 </head>
 <body>
-    <section class="main">
-        <div class="collection">
-            <div class="card add-card no-sort">Add</div>
+    <main class="w-screen h-screen flex justify-center items-center">
+        <div id="js-collection" class="overflow-y-auto content-start flex-wrap flex border-1 border-black rounded-xl size-4/5 gap-4 p-4">
+            <div class="js-card js-add-card js-no-sort flex justify-center items-center border-1 border-black rounded-lg w-27 h-40 overflow-hidden cursor-pointer select-none hover:scale-103">Add</div>
         </div>
-    </section>
+    </main>
 
-    <div class="overlay" id="card-overlay">
-        <div class="overlay-book" id="overlay-book">
-            <div class="overlay-book-left">
-                <img src="" alt="обложка" id="cover" />
-                <div class="overlay-book-left-rating">5 star</div>
+    <div class="fixed flex justify-center items-center top-0 left-0 w-screen h-screen z-100 bg-black/50 opacity-0 invisible transition ease-in-out" id="card-overlay">
+        <div class="flex p-10 border-1 border-black rounded-xl bg-white w-8/10 h-9/10 z-105 text-black transition ease-in-out opacity-0 invisible " id="overlay-book">
+            <div class="flex flex-col mt-20 gap-y-4 min-w-40 max-w-40">
+                <img class="border-1 border-black rounded-lg w-1/1 h-5/11" src="" alt="обложка" id="cover" />
+                <div class="justify-self-center">
+                    <p class="text-center">5 star</p>
+                </div>
             </div>
-            <div class="overlay-book-main">
+            <div class="flex flex-col grow items-center">
                 <h1 id="title">Загрузка...</h1>
                 <p id="author">Author</p>
                 <p id="description">Description</p>
